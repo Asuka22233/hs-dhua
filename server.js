@@ -13,7 +13,7 @@ app.use(
     origin:
       process.env.FRONTEND_URL || process.env.NODE_ENV === "production"
         ? [
-            "https://你的用户名.github.io", // 替换为你的 GitHub Pages 地址
+            "https://asuka022533.github.io", // GitHub Pages 地址
             "http://localhost:5500", // VS Code Live Server
             "http://127.0.0.1:5500",
           ]
