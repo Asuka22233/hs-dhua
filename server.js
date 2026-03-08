@@ -21,9 +21,6 @@ app.use(
 );
 app.use(express.json());
 
-// 静态文件：前端页面（仅在本地测试时使用）
-app.use(express.static(path.join(__dirname, "docx")));
-
 // ===== API 代理：对话接口 =====
 app.post("/api/chat", async (req, res) => {
   const { systemPrompt, messages } = req.body;
@@ -97,9 +94,15 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// 其他路由回退到 index.html（单页应用支持）
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "docx", "index.html"));
+// 健康检查和根路径
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "红色文化对话后端服务正在运行",
+    endpoints: {
+      chat: "POST /api/chat",
+    },
+  });
 });
 
 app.listen(PORT, () => {
