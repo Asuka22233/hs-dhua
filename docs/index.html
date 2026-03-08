@@ -270,33 +270,30 @@
 
       /* ===== 分隔线 ===== */
       .divider {
-        position: relative;
-        text-align: center;
-        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 24px;
         z-index: 1;
       }
-      .divider::before {
+      .divider::before,
+      .divider::after {
         content: "";
-        position: absolute;
-        top: 50%;
-        left: 10%;
-        width: 35%;
+        flex: 1;
         height: 1px;
+      }
+      .divider::before {
         background: linear-gradient(to right, transparent, var(--gold-dim));
       }
       .divider::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 10%;
-        width: 35%;
-        height: 1px;
         background: linear-gradient(to left, transparent, var(--gold-dim));
       }
       .divider span {
         color: var(--gold-dim);
         font-size: 18px;
         letter-spacing: 4px;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
 
       /* ===== 先烈选择区 ===== */
@@ -1653,7 +1650,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             systemPrompt: currentHero.systemPrompt,
-            messages: messages.slice(0, -1), // 已含本次user，无需重复
+            messages: messages,
           }),
         });
 
