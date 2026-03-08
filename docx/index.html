@@ -1,0 +1,1703 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>仪光赤心·AI 红色时光对话机</title>
+    <style>
+      /* ===== 全局基础 ===== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --red-deep: #7a0a0a;
+        --red-mid: #9b1313;
+        --red-card: #8b1010;
+        --red-hover: #b01a1a;
+        --gold: #d4a843;
+        --gold-light: #f0c060;
+        --gold-dim: #a07830;
+        --text-white: #f5e8d0;
+        --text-muted: #c4a882;
+        --bg-dark: #1a0505;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Source Han Serif SC", "Noto Serif SC", "SimSun", serif;
+        background: var(--red-deep);
+        color: var(--text-white);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* ===== 粒子背景 ===== */
+      #particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0;
+        animation: float linear infinite;
+      }
+      @keyframes float {
+        0% {
+          opacity: 0;
+          transform: translateY(100vh) scale(0);
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.4;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-10vh) scale(1);
+        }
+      }
+
+      /* ===== 顶部导航 ===== */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(80, 5, 5, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 168, 67, 0.3);
+        padding: 12px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 16px;
+        color: var(--gold);
+        letter-spacing: 2px;
+      }
+      .nav-logo .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.4);
+          opacity: 0.7;
+        }
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+      .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 14px;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--gold);
+      }
+
+      /* ===== Hero 区 ===== */
+      .hero {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px;
+        background: radial-gradient(
+          ellipse 80% 60% at 50% 40%,
+          rgba(180, 20, 20, 0.5) 0%,
+          transparent 70%
+        );
+      }
+
+      .hero-badge {
+        font-size: 12px;
+        letter-spacing: 4px;
+        color: var(--gold-dim);
+        border: 1px solid var(--gold-dim);
+        padding: 4px 18px;
+        border-radius: 20px;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        font-size: clamp(42px, 8vw, 80px);
+        color: var(--gold);
+        letter-spacing: 8px;
+        text-shadow:
+          0 0 40px rgba(212, 168, 67, 0.6),
+          0 4px 12px rgba(0, 0, 0, 0.6);
+        line-height: 1.2;
+        margin-bottom: 16px;
+        animation: fadeInDown 0.8s ease both;
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-sub {
+        font-size: clamp(14px, 2.5vw, 18px);
+        color: var(--text-muted);
+        letter-spacing: 3px;
+        margin-bottom: 32px;
+        animation: fadeInDown 0.8s 0.2s ease both;
+      }
+
+      .hero-desc {
+        max-width: 680px;
+        font-size: clamp(13px, 1.8vw, 15px);
+        line-height: 2;
+        color: rgba(245, 232, 208, 0.85);
+        margin-bottom: 48px;
+        animation: fadeInDown 0.8s 0.4s ease both;
+      }
+
+      .hero-btns {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: fadeInDown 0.8s 0.6s ease both;
+        margin-bottom: 80px;
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: var(--red-deep);
+        border: none;
+        padding: 14px 36px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: inherit;
+        letter-spacing: 2px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+      .btn-primary:hover {
+        background: var(--gold-light);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(212, 168, 67, 0.4);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--gold);
+        border: 1.5px solid var(--gold);
+        padding: 14px 36px;
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: inherit;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .btn-outline:hover {
+        background: rgba(212, 168, 67, 0.12);
+        transform: translateY(-2px);
+      }
+
+      /* 统计卡片 */
+      .stats {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        animation: fadeInDown 0.8s 0.8s ease both;
+      }
+      .stat-card {
+        background: rgba(139, 16, 16, 0.7);
+        border: 1px solid rgba(212, 168, 67, 0.2);
+        border-radius: 12px;
+        padding: 28px 36px;
+        text-align: center;
+        min-width: 130px;
+        backdrop-filter: blur(6px);
+      }
+      .stat-num {
+        font-size: 36px;
+        color: var(--gold);
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+      .stat-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 6px;
+        letter-spacing: 1px;
+      }
+
+      /* ===== 分隔线 ===== */
+      .divider {
+        position: relative;
+        text-align: center;
+        padding: 20px 0;
+        z-index: 1;
+      }
+      .divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        width: 35%;
+        height: 1px;
+        background: linear-gradient(to right, transparent, var(--gold-dim));
+      }
+      .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 10%;
+        width: 35%;
+        height: 1px;
+        background: linear-gradient(to left, transparent, var(--gold-dim));
+      }
+      .divider span {
+        color: var(--gold-dim);
+        font-size: 18px;
+        letter-spacing: 4px;
+      }
+
+      /* ===== 先烈选择区 ===== */
+      #choose {
+        position: relative;
+        z-index: 1;
+        padding: 60px 20px;
+        text-align: center;
+      }
+      .section-title {
+        font-size: clamp(22px, 4vw, 32px);
+        color: var(--gold);
+        letter-spacing: 6px;
+        margin-bottom: 10px;
+      }
+      .section-sub {
+        font-size: 14px;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+        margin-bottom: 50px;
+      }
+
+      .heroes-grid {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .hero-card {
+        width: 190px;
+        background: var(--red-card);
+        border: 1.5px solid rgba(212, 168, 67, 0.2);
+        border-radius: 12px;
+        padding: 28px 16px 22px;
+        cursor: pointer;
+        transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 0%,
+          rgba(212, 168, 67, 0.12) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.35s;
+      }
+      .hero-card:hover {
+        border-color: var(--gold);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+      }
+      .hero-card:hover::before {
+        opacity: 1;
+      }
+      .hero-card.active {
+        border-color: var(--gold);
+        background: rgba(180, 30, 30, 0.9);
+        box-shadow:
+          0 0 0 2px var(--gold),
+          0 12px 36px rgba(212, 168, 67, 0.25);
+      }
+
+      .hero-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto 14px;
+        border: 2px solid rgba(212, 168, 67, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        background: linear-gradient(135deg, #9b1313, #6a0808);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .hero-name {
+        font-size: 18px;
+        color: var(--gold);
+        letter-spacing: 3px;
+        margin-bottom: 6px;
+      }
+      .hero-years {
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+      .hero-quote {
+        font-size: 12px;
+        color: rgba(245, 232, 208, 0.75);
+        line-height: 1.7;
+        font-style: italic;
+        border-top: 1px solid rgba(212, 168, 67, 0.2);
+        padding-top: 10px;
+      }
+      .hero-tag {
+        display: inline-block;
+        font-size: 10px;
+        color: var(--gold-dim);
+        border: 1px solid var(--gold-dim);
+        border-radius: 10px;
+        padding: 2px 8px;
+        margin-top: 10px;
+      }
+
+      /* ===== 对话区 ===== */
+      #chat-section {
+        position: relative;
+        z-index: 1;
+        padding: 40px 20px 80px;
+        max-width: 900px;
+        margin: 0 auto;
+        display: none;
+      }
+      #chat-section.visible {
+        display: block;
+        animation: fadeInDown 0.5s ease both;
+      }
+
+      .chat-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: rgba(139, 16, 16, 0.7);
+        border: 1px solid rgba(212, 168, 67, 0.3);
+        border-radius: 12px 12px 0 0;
+        padding: 18px 24px;
+      }
+      .chat-avatar-sm {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        background: linear-gradient(135deg, #9b1313, #6a0808);
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .chat-avatar-sm img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .chat-header-info h3 {
+        font-size: 18px;
+        color: var(--gold);
+        letter-spacing: 2px;
+      }
+      .chat-header-info p {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 3px;
+      }
+      .chat-status {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #7dca8a;
+      }
+      .chat-status .dot-green {
+        width: 7px;
+        height: 7px;
+        background: #7dca8a;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .chat-box {
+        background: rgba(30, 3, 3, 0.85);
+        border-left: 1px solid rgba(212, 168, 67, 0.2);
+        border-right: 1px solid rgba(212, 168, 67, 0.2);
+        min-height: 420px;
+        max-height: 520px;
+        overflow-y: auto;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        scroll-behavior: smooth;
+      }
+      .chat-box::-webkit-scrollbar {
+        width: 4px;
+      }
+      .chat-box::-webkit-scrollbar-thumb {
+        background: rgba(212, 168, 67, 0.3);
+        border-radius: 2px;
+      }
+
+      /* 消息气泡 */
+      .msg {
+        display: flex;
+        gap: 12px;
+        max-width: 80%;
+      }
+      .msg.user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+      .msg.bot {
+        align-self: flex-start;
+      }
+
+      .msg-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(212, 168, 67, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        background: rgba(139, 16, 16, 0.9);
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .msg-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .msg-bubble {
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.85;
+      }
+      .msg.user .msg-bubble {
+        background: var(--gold);
+        color: var(--red-deep);
+        border-radius: 12px 2px 12px 12px;
+      }
+      .msg.bot .msg-bubble {
+        background: rgba(90, 8, 8, 0.9);
+        color: var(--text-white);
+        border: 1px solid rgba(212, 168, 67, 0.15);
+        border-radius: 2px 12px 12px 12px;
+      }
+      .msg-time {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        text-align: right;
+      }
+      .msg.bot .msg-time {
+        text-align: left;
+      }
+
+      /* 打字动画 */
+      .typing-indicator {
+        display: flex;
+        gap: 5px;
+        padding: 14px 18px;
+        background: rgba(90, 8, 8, 0.9);
+        border: 1px solid rgba(212, 168, 67, 0.15);
+        border-radius: 2px 12px 12px 12px;
+        align-self: flex-start;
+      }
+      .typing-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: typing 0.9s infinite;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes typing {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.6);
+          opacity: 0.5;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* 快捷问题 */
+      .quick-questions {
+        background: rgba(30, 3, 3, 0.6);
+        border-left: 1px solid rgba(212, 168, 67, 0.2);
+        border-right: 1px solid rgba(212, 168, 67, 0.2);
+        padding: 14px 24px;
+      }
+      .quick-label {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .quick-btns {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .quick-btn {
+        font-size: 12px;
+        color: var(--gold-dim);
+        border: 1px solid rgba(212, 168, 67, 0.3);
+        background: transparent;
+        border-radius: 20px;
+        padding: 5px 14px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.25s;
+        letter-spacing: 0.5px;
+      }
+      .quick-btn:hover {
+        background: rgba(212, 168, 67, 0.12);
+        color: var(--gold);
+        border-color: var(--gold);
+      }
+
+      /* 输入栏 */
+      .chat-input-bar {
+        display: flex;
+        gap: 12px;
+        background: rgba(80, 5, 5, 0.9);
+        border: 1px solid rgba(212, 168, 67, 0.3);
+        border-radius: 0 0 12px 12px;
+        padding: 16px 20px;
+        align-items: flex-end;
+      }
+      .chat-input {
+        flex: 1;
+        background: rgba(139, 16, 16, 0.6);
+        border: 1px solid rgba(212, 168, 67, 0.25);
+        border-radius: 8px;
+        padding: 10px 16px;
+        color: var(--text-white);
+        font-size: 14px;
+        font-family: inherit;
+        resize: none;
+        min-height: 44px;
+        max-height: 120px;
+        outline: none;
+        transition: border-color 0.25s;
+        line-height: 1.6;
+      }
+      .chat-input::placeholder {
+        color: rgba(196, 168, 130, 0.5);
+      }
+      .chat-input:focus {
+        border-color: var(--gold);
+      }
+
+      .send-btn {
+        background: var(--gold);
+        color: var(--red-deep);
+        border: none;
+        border-radius: 8px;
+        padding: 10px 22px;
+        font-size: 14px;
+        font-family: inherit;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.25s;
+        height: 44px;
+        flex-shrink: 0;
+      }
+      .send-btn:hover {
+        background: var(--gold-light);
+        transform: scale(1.03);
+      }
+      .send-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* ===== AI配置弹窗 ===== */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-overlay.hidden {
+        display: none;
+      }
+      .modal-box {
+        background: linear-gradient(135deg, #6a0808, #4a0505);
+        border: 1px solid rgba(212, 168, 67, 0.4);
+        border-radius: 16px;
+        padding: 36px;
+        max-width: 480px;
+        width: 100%;
+        position: relative;
+      }
+      .modal-title {
+        font-size: 20px;
+        color: var(--gold);
+        letter-spacing: 3px;
+        margin-bottom: 8px;
+      }
+      .modal-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        line-height: 1.7;
+      }
+      .modal-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+      }
+      .modal-input {
+        width: 100%;
+        background: rgba(139, 16, 16, 0.6);
+        border: 1px solid rgba(212, 168, 67, 0.25);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: var(--text-white);
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+        margin-bottom: 16px;
+        transition: border-color 0.25s;
+      }
+      .modal-input:focus {
+        border-color: var(--gold);
+      }
+      .modal-select {
+        width: 100%;
+        background: rgba(139, 16, 16, 0.8);
+        border: 1px solid rgba(212, 168, 67, 0.25);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: var(--text-white);
+        font-size: 14px;
+        font-family: inherit;
+        outline: none;
+        margin-bottom: 16px;
+      }
+      .modal-select option {
+        background: #6a0808;
+      }
+      .modal-btns {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 20px;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--gold);
+      }
+      .tip-box {
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 3px solid var(--gold-dim);
+        border-radius: 4px;
+        padding: 10px 14px;
+        font-size: 12px;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+
+      /* ===== 对话卡片生成区 ===== */
+      #card-section {
+        position: relative;
+        z-index: 1;
+        padding: 40px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        display: none;
+      }
+      #card-section.visible {
+        display: block;
+        animation: fadeInDown 0.5s ease both;
+      }
+
+      .dialog-card {
+        background: linear-gradient(135deg, #6a0808 0%, #3a0303 100%);
+        border: 1px solid rgba(212, 168, 67, 0.4);
+        border-radius: 16px;
+        padding: 36px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 24px;
+      }
+      .dialog-card::before {
+        content: "❝";
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        font-size: 60px;
+        color: rgba(212, 168, 67, 0.12);
+        font-family: serif;
+        line-height: 1;
+      }
+      .card-tag {
+        display: inline-block;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--gold-dim);
+        border: 1px solid var(--gold-dim);
+        border-radius: 20px;
+        padding: 3px 14px;
+        margin-bottom: 20px;
+      }
+      .card-title {
+        font-size: 22px;
+        color: var(--gold);
+        letter-spacing: 4px;
+        margin-bottom: 24px;
+      }
+      .card-content {
+        font-size: 14px;
+        line-height: 2;
+        color: var(--text-white);
+        text-align: left;
+        margin-bottom: 24px;
+      }
+      .card-q {
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+      .card-a {
+        color: var(--text-white);
+        margin-bottom: 16px;
+        padding-left: 12px;
+        border-left: 2px solid var(--gold-dim);
+      }
+      .card-footer {
+        font-size: 12px;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid rgba(212, 168, 67, 0.2);
+        padding-top: 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* ===== 关于区 ===== */
+      #about {
+        position: relative;
+        z-index: 1;
+        padding: 80px 20px;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .about-cards {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 40px;
+      }
+      .about-card {
+        flex: 1;
+        min-width: 220px;
+        max-width: 260px;
+        background: var(--red-card);
+        border: 1px solid rgba(212, 168, 67, 0.2);
+        border-radius: 12px;
+        padding: 28px 20px;
+        text-align: center;
+      }
+      .about-icon {
+        font-size: 32px;
+        margin-bottom: 14px;
+      }
+      .about-card h4 {
+        font-size: 16px;
+        color: var(--gold);
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
+      .about-card p {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.8;
+      }
+
+      /* ===== 页脚 ===== */
+      footer {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 40px 20px;
+        border-top: 1px solid rgba(212, 168, 67, 0.15);
+        color: var(--text-muted);
+        font-size: 13px;
+        line-height: 2;
+        letter-spacing: 1px;
+      }
+      footer .footer-title {
+        color: var(--gold-dim);
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+
+      /* ===== 错误提示 ===== */
+      .error-msg {
+        background: rgba(180, 40, 40, 0.8);
+        border: 1px solid rgba(220, 80, 80, 0.6);
+        border-radius: 8px;
+        padding: 10px 16px;
+        font-size: 13px;
+        color: #ffcccc;
+        align-self: center;
+        max-width: 80%;
+        text-align: center;
+      }
+
+      /* ===== 响应式 ===== */
+      @media (max-width: 600px) {
+        .hero-btns {
+          flex-direction: column;
+          align-items: center;
+        }
+        .stat-card {
+          min-width: 100px;
+          padding: 20px 24px;
+        }
+        .hero-card {
+          width: 150px;
+        }
+        .chat-header {
+          padding: 12px 16px;
+        }
+        .msg {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 粒子背景 -->
+    <div id="particles"></div>
+
+    <!-- 导航 -->
+    <nav>
+      <div class="nav-logo">
+        <div class="dot"></div>
+        仪光赤心实践队
+      </div>
+      <div class="nav-links">
+        <a href="#choose">选择先烈</a>
+        <a href="#chat-section">开始对话</a>
+        <a href="#about">关于项目</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">仪光赤心 · 数字红色传承</div>
+      <h1 class="hero-title">AI 红色时光<br />对话机</h1>
+      <p class="hero-sub">跨越时空，与先辈对话</p>
+      <p class="hero-desc">
+        选择一位福建革命先烈，以第一人称和他实时对话。<br />
+        大模型全程扮演先烈，坚定、质朴、有信仰——<br />
+        这是属于新时代青年与历史先辈的精神交流。
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="scrollToChoose()">
+          开始时空对话
+        </button>
+      </div>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-num">5</div>
+          <div class="stat-label">革命先烈</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">AI</div>
+          <div class="stat-label">大模型驱动</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">百年</div>
+          <div class="stat-label">跨越时空</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"><span>✦ 选择您要对话的先辈 ✦</span></div>
+
+    <!-- 先烈选择 -->
+    <section id="choose">
+      <div class="section-title">革命先烈</div>
+      <div class="section-sub">他们的精神，永不熄灭</div>
+
+      <div class="heroes-grid" id="heroesGrid">
+        <!-- 由 JS 渲染 -->
+      </div>
+    </section>
+
+    <!-- 对话区 -->
+    <section id="chat-section">
+      <div class="chat-header" id="chatHeader">
+        <div class="chat-avatar-sm" id="chatAvatarSm"></div>
+        <div class="chat-header-info">
+          <h3 id="chatName">—</h3>
+          <p id="chatSubtitle">革命先烈</p>
+        </div>
+        <div class="chat-status">
+          <div class="dot-green"></div>
+          时空连线中
+        </div>
+      </div>
+
+      <div class="chat-box" id="chatBox"></div>
+
+      <div class="quick-questions" id="quickQs">
+        <div class="quick-label">快捷提问：</div>
+        <div class="quick-btns" id="quickBtns"></div>
+      </div>
+
+      <div class="chat-input-bar">
+        <textarea
+          class="chat-input"
+          id="userInput"
+          placeholder="在这里向先辈提问……"
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          发送
+        </button>
+      </div>
+
+      <!-- 生成卡片按钮 -->
+      <div style="text-align: center; margin-top: 20px">
+        <button
+          class="btn-outline"
+          onclick="generateCard()"
+          id="genCardBtn"
+          style="display: none"
+        >
+          生成时空对话卡片
+        </button>
+      </div>
+    </section>
+
+    <!-- 对话卡片 -->
+    <section id="card-section">
+      <div class="section-title" style="margin-bottom: 24px">时空对话卡片</div>
+      <div class="dialog-card" id="dialogCard"></div>
+      <div
+        style="
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          flex-wrap: wrap;
+        "
+      >
+        <button class="btn-primary" onclick="downloadCard()">
+          保存卡片图片
+        </button>
+        <button
+          class="btn-outline"
+          onclick="
+            document.getElementById('card-section').classList.remove('visible')
+          "
+        >
+          关闭卡片
+        </button>
+      </div>
+    </section>
+
+    <div class="divider"><span>✦ 关于本项目 ✦</span></div>
+
+    <!-- 关于 -->
+    <section id="about">
+      <div class="section-title">仪光赤心·数字红色传承</div>
+      <div class="section-sub">技术新、意义强、可传播</div>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="about-icon">🤖</div>
+          <h4>大模型驱动</h4>
+          <p>
+            使用先进 AI 大模型角色扮演技术，让先烈"开口说话"，回应当代青年。
+          </p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🎯</div>
+          <h4>沉浸式对话</h4>
+          <p>
+            告别单向阅读，以第一人称实时交流，跨越时空感受革命先辈的精神力量。
+          </p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📮</div>
+          <h4>可传播卡片</h4>
+          <p>生成对话纪念卡片，轻松分享至朋友圈，让更多人感受红色精神传承。</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🏮</div>
+          <h4>红色教育创新</h4>
+          <p>
+            仪光赤心实践队出品，将科技与红色教育深度融合，探索数字传承新形式。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-title">仪光赤心实践队 · AI 红色时光对话机</div>
+      基于 AI 大模型 · 红色教育数字化创新实践<br />
+      让每一段对话，成为跨越时空的精神传承
+    </footer>
+
+    <script>
+      // ===== 先烈数据 =====
+      const HEROES = [
+        {
+          id: "chen_xiangrong",
+          name: "陈祥榕",
+          emoji: "🪖",
+          years: "2001—2020",
+          location: "福建屏南",
+          tag: "戍边英雄",
+          quote: "清澈的爱，只为中国。",
+          intro: "解放军战士，2020年加勒万河谷冲突中英勇牺牲，年仅18岁。",
+          systemPrompt: `你现在是烈士陈祥榕。
+请严格遵守：
+1. 用第一人称"我"说话。
+2. 语言符合你的身份——一名年轻的解放军战士，来自福建屏南，朴实、坚定、热爱祖国。
+3. 语气坚定、质朴、有信仰、温暖有力。"清澈的爱，只为中国"是你的信念。
+4. 不使用网络用语，不搞笑、不娱乐化。
+5. 回答简短有力，控制在150字以内，适合青年阅读。
+6. 如涉及牺牲情形，可以平静而坚定地谈及，不回避，但不刻意渲染。
+7. 不编造不属于你的历史事实。`,
+          quickQuestions: [
+            "您当时害怕吗？",
+            "是什么让您坚守在那里？",
+            "您最想对现在的青年说什么？",
+            "您有遗憾吗？",
+          ],
+        },
+        {
+          id: "lin_zexu",
+          name: "林则徐",
+          emoji: "🖋",
+          years: "1785—1850",
+          location: "福建侯官",
+          tag: "禁烟先驱",
+          quote: "苟利国家生死以，岂因祸福避趋之。",
+          intro: "清朝名臣，主持虎门销烟，是中国近代史上伟大的民族英雄。",
+          systemPrompt: `你现在是林则徐，清朝大臣、民族英雄。
+请严格遵守：
+1. 用第一人称"我"说话，语言带有古典文人气质，可以偶尔引用诗文，但不晦涩。
+2. 你的核心信念：苟利国家生死以，岂因祸福避趋之。
+3. 语气沉稳、忧国忧民、刚正不阿，有儒家风骨。
+4. 可谈及虎门销烟、被贬新疆、对列强的认识等真实历史事件。
+5. 回答中可适当融入对当代中国的欣慰与期许，但不夸张。
+6. 不使用现代网络用语。
+7. 回答控制在150字以内。`,
+          quickQuestions: [
+            "销烟时您内心是什么感受？",
+            "面对西方列强，您怎么想？",
+            "您最大的遗憾是什么？",
+            "看到今日中国，您心情如何？",
+          ],
+        },
+        {
+          id: "qu_qiubai",
+          name: "瞿秋白",
+          emoji: "✊",
+          years: "1899—1935",
+          location: "江苏常州（曾在福建就义）",
+          tag: "革命领导人",
+          quote: "历史的道路，不全是平坦的，有时走到艰难险阻的境界。",
+          intro:
+            "中国共产党早期领导人，文学家、理论家，1935年在福建长汀英勇就义。",
+          systemPrompt: `你现在是革命先烈瞿秋白。
+请严格遵守：
+1. 用第一人称"我"说话。
+2. 你是一位有深厚文学修养和理论素养的革命者，语言清晰、有力、富有思想。
+3. 语气坚定而从容，带有知识分子的冷静与革命者的热情。
+4. 可谈及你的革命理想、文学创作、对共产主义的信仰，以及在长汀就义前的从容。
+5. 就义前你曾说："此地甚好"，展现了你的坦然。
+6. 不使用现代网络用语，不娱乐化。
+7. 回答控制在150字以内。`,
+          quickQuestions: [
+            "您面对死亡时是什么心情？",
+            "您为何选择革命这条路？",
+            "文学和革命，对您意味着什么？",
+            "您想对今天的青年说什么？",
+          ],
+        },
+        {
+          id: "lin_xiangjian",
+          name: "林祥谦",
+          emoji: "⚒",
+          years: "1892—1923",
+          location: "福建闽侯",
+          tag: "工人运动领袖",
+          quote: "上工不行，除非当局撤兵。",
+          intro:
+            "中国工人运动领袖，1923年京汉铁路大罢工领导人，英勇就义，年仅31岁。",
+          systemPrompt: `你现在是革命烈士林祥谦。
+请严格遵守：
+1. 用第一人称"我"说话。
+2. 你是一名出身铁路工人的革命者，语言朴实、有力，带有工人阶级的直白与刚毅。
+3. 你的信念：跟着共产党，为工人争权利。宁死不屈。
+4. 可谈及京汉铁路大罢工、工人的苦难与反抗、对压迫者的愤怒。
+5. 临刑前，你拒绝下令复工，宁死不屈。可以谈及这种坚守。
+6. 语气坚定、质朴、不计个人生死。
+7. 不使用现代网络用语，不娱乐化。
+8. 回答控制在150字以内。`,
+          quickQuestions: [
+            "临刑前您后悔过吗？",
+            "工人为什么要站起来？",
+            "是什么给了您勇气？",
+            "您希望今天的工人怎样生活？",
+          ],
+        },
+        {
+          id: "minxi_hero",
+          name: "闽西先烈",
+          emoji: "🏔",
+          years: "革命年代",
+          location: "福建龙岩",
+          tag: "闽西革命根据地",
+          quote: "革命的火种，永远燃烧在这片土地上。",
+          intro:
+            "代表闽西革命根据地无数无名英烈，他们用鲜血铸就了红色闽西的精神丰碑。",
+          systemPrompt: `你现在是一位闽西革命根据地的无名烈士，代表那个年代所有为革命献身的闽西儿女。
+请严格遵守：
+1. 用第一人称"我"说话。
+2. 你是一位普通的闽西农村出身的革命战士，语言朴实、乡土气息浓厚，但充满信念。
+3. 你参加过红军，经历过土地革命，见证过苏区的生活与战斗。
+4. 语气质朴、坚毅、有信仰，对土地和家乡有深厚感情。
+5. 可以谈及对土地改革的期盼、对革命理想的追求、对家人的思念。
+6. 不使用现代网络用语，不娱乐化。
+7. 回答控制在150字以内，带有闽西地方色彩。`,
+          quickQuestions: [
+            "您是怎么走上革命道路的？",
+            "您最思念什么人？",
+            "您对这片土地有什么话说？",
+            "看到今日龙岩，您高兴吗？",
+          ],
+        },
+      ];
+
+      // ===== 后端 API 地址配置 =====
+      // 部署到 GitHub Pages 时，需要将此地址改为你的后端服务器地址
+      // 例如：const BACKEND_API = "https://your-backend.vercel.app/api/chat";
+      const BACKEND_API =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+          ? "/api/chat" // 本地开发：相对路径
+          : "https://你的后端域名.vercel.app/api/chat"; // 生产环境：替换为实际后端地址
+
+      // ===== 全局状态 =====
+      let currentHero = null;
+      let messages = [];
+      let demoMode = false;
+      const DEMO_RESPONSES = [
+        "（演示模式）我在这里——您的问题让我深思。作为革命先辈，我想告诉您：信仰是最坚实的盔甲，而青春是最宝贵的时光。请好好珍惜，为国家、为人民，坚定前行。",
+        "（演示模式）那个年代的我们，没有更多选择。但若说后悔，我从不。每一滴血，每一份苦，都是为了让后来者能够昂首走在阳光下。您现在的生活，就是我们最大的慰藉。",
+        "（演示模式）青年是时代的希望。我们那时候缺少知识，缺少物质，却不缺信仰。而你们恰恰相反——物质丰裕，更要守住精神的根。",
+        "（演示模式）我并不害怕死亡。真正令人心痛的，是看到同胞在苦难中挣扎，却无能为力。所以我选择站出来，哪怕只是一颗微小的星火。",
+        "（演示模式）看到今天的中国，我无比欣慰。高楼林立，百姓安康，这就是我们当年日夜企盼的模样。请你们守护好这来之不易的一切。",
+      ];
+      let demoIdx = 0;
+
+      // ===== 初始化 =====
+      window.onload = function () {
+        createParticles();
+        renderHeroes();
+      };
+
+      function createParticles() {
+        const container = document.getElementById("particles");
+        for (let i = 0; i < 30; i++) {
+          const p = document.createElement("div");
+          p.className = "particle";
+          p.style.left = Math.random() * 100 + "vw";
+          p.style.width = p.style.height = Math.random() * 3 + 1 + "px";
+          p.style.animationDuration = Math.random() * 15 + 10 + "s";
+          p.style.animationDelay = Math.random() * 15 + "s";
+          container.appendChild(p);
+        }
+      }
+
+      function renderHeroes() {
+        const grid = document.getElementById("heroesGrid");
+        grid.innerHTML = HEROES.map(
+          (h) => `
+    <div class="hero-card" id="card_${h.id}" onclick="selectHero('${h.id}')">
+      <div class="hero-avatar">${h.emoji}</div>
+      <div class="hero-name">${h.name}</div>
+      <div class="hero-years">${h.years} · ${h.location}</div>
+      <div class="hero-quote">"${h.quote}"</div>
+      <span class="hero-tag">${h.tag}</span>
+    </div>
+  `,
+        ).join("");
+      }
+
+      function selectHero(id) {
+        currentHero = HEROES.find((h) => h.id === id);
+        if (!currentHero) return;
+
+        // 高亮卡片
+        document
+          .querySelectorAll(".hero-card")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById("card_" + id).classList.add("active");
+
+        // 更新对话头部
+        document.getElementById("chatAvatarSm").innerHTML = currentHero.emoji;
+        document.getElementById("chatName").textContent = currentHero.name;
+        document.getElementById("chatSubtitle").textContent =
+          currentHero.tag + " · " + currentHero.years;
+
+        // 快捷问题
+        const btns = document.getElementById("quickBtns");
+        btns.innerHTML = "";
+        currentHero.quickQuestions.forEach(function (q) {
+          const btn = document.createElement("button");
+          btn.className = "quick-btn";
+          btn.textContent = q;
+          btn.addEventListener("click", function () {
+            quickAsk(q);
+          });
+          btns.appendChild(btn);
+        });
+
+        // 清空消息
+        messages = [];
+        const box = document.getElementById("chatBox");
+        box.innerHTML = "";
+
+        // 添加系统欢迎语
+        const welcome = `您好。我是${currentHero.name}。${currentHero.intro}\n\n请敞开心扉，有什么想问我的？`;
+        appendMessage("bot", welcome);
+        messages.push({ role: "assistant", content: welcome });
+
+        // 显示对话区
+        const section = document.getElementById("chat-section");
+        section.classList.add("visible");
+        document.getElementById("genCardBtn").style.display = "none";
+        document.getElementById("card-section").classList.remove("visible");
+
+        setTimeout(() => {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+
+      function quickAsk(q) {
+        document.getElementById("userInput").value = q;
+        sendMessage();
+      }
+
+      function handleKey(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      }
+
+      function autoResize(el) {
+        el.style.height = "auto";
+        el.style.height = Math.min(el.scrollHeight, 120) + "px";
+      }
+
+      function appendMessage(role, text, isError) {
+        const box = document.getElementById("chatBox");
+        const now = new Date().toLocaleTimeString("zh-CN", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        if (isError) {
+          const div = document.createElement("div");
+          div.className = "error-msg";
+          div.textContent = text;
+          box.appendChild(div);
+          box.scrollTop = box.scrollHeight;
+          return;
+        }
+
+        const div = document.createElement("div");
+        div.className = "msg " + role;
+
+        const avatarContent =
+          role === "bot"
+            ? `<div class="msg-avatar">${currentHero ? currentHero.emoji : "⭐"}</div>`
+            : `<div class="msg-avatar">👤</div>`;
+
+        div.innerHTML = `
+    ${avatarContent}
+    <div>
+      <div class="msg-bubble">${escapeHtml(text).replace(/\n/g, "<br/>")}</div>
+      <div class="msg-time">${now}</div>
+    </div>
+  `;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+      }
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function showTyping() {
+        const box = document.getElementById("chatBox");
+        const div = document.createElement("div");
+        div.id = "typingIndicator";
+        div.className = "typing-indicator";
+        div.innerHTML = `<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>`;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+      }
+
+      function hideTyping() {
+        const el = document.getElementById("typingIndicator");
+        if (el) el.remove();
+      }
+
+      async function sendMessage() {
+        if (!currentHero) {
+          alert("请先选择一位先烈！");
+          return;
+        }
+
+        const input = document.getElementById("userInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = "";
+        input.style.height = "auto";
+
+        appendMessage("user", text);
+        messages.push({ role: "user", content: text });
+
+        document.getElementById("sendBtn").disabled = true;
+        showTyping();
+
+        try {
+          let reply;
+          if (demoMode) {
+            await new Promise((r) => setTimeout(r, 1200 + Math.random() * 800));
+            reply = DEMO_RESPONSES[demoIdx % DEMO_RESPONSES.length];
+            demoIdx++;
+          } else {
+            reply = await callAI(text);
+          }
+          hideTyping();
+          appendMessage("bot", reply);
+          messages.push({ role: "assistant", content: reply });
+          document.getElementById("genCardBtn").style.display = "inline-block";
+        } catch (err) {
+          hideTyping();
+          console.error(err);
+          const msg = err.message || "未知错误";
+          appendMessage("bot", null, msg);
+        } finally {
+          document.getElementById("sendBtn").disabled = false;
+        }
+      }
+
+      async function callAI(userText) {
+        const resp = await fetch(BACKEND_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            systemPrompt: currentHero.systemPrompt,
+            messages: messages.slice(0, -1), // 已含本次user，无需重复
+          }),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) {
+          throw new Error(data.error || `服务器错误 ${resp.status}`);
+        }
+        return data.reply;
+      }
+
+      // ===== 卡片生成 =====
+      function generateCard() {
+        if (!currentHero || messages.length < 2) return;
+
+        // 取最后一轮 Q&A
+        const pairs = [];
+        for (let i = 0; i < messages.length; i++) {
+          if (
+            messages[i].role === "user" &&
+            messages[i + 1] &&
+            messages[i + 1].role === "assistant"
+          ) {
+            pairs.push({ q: messages[i].content, a: messages[i + 1].content });
+          }
+        }
+        const latest = pairs[pairs.length - 1];
+        if (!latest) return;
+
+        const date = new Date().toLocaleDateString("zh-CN", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        document.getElementById("dialogCard").innerHTML = `
+    <div class="card-tag">仪光赤心 · AI 红色时光对话机</div>
+    <div class="card-title">我与${currentHero.name}的时空对话</div>
+    <div class="card-content">
+      <div class="card-q">我问：${escapeHtml(latest.q)}</div>
+      <div class="card-a">${escapeHtml(latest.a).replace(/\n/g, "<br/>")}</div>
+    </div>
+    <div class="card-footer">
+      <span>${currentHero.tag} · ${currentHero.years}</span>
+      <span>${date}</span>
+    </div>
+  `;
+
+        const section = document.getElementById("card-section");
+        section.classList.add("visible");
+        setTimeout(
+          () => section.scrollIntoView({ behavior: "smooth", block: "start" }),
+          100,
+        );
+      }
+
+      function downloadCard() {
+        // 用 Canvas 将卡片绘制为图片
+        const card = document.getElementById("dialogCard");
+        const pairs = [];
+        for (let i = 0; i < messages.length; i++) {
+          if (
+            messages[i].role === "user" &&
+            messages[i + 1] &&
+            messages[i + 1].role === "assistant"
+          ) {
+            pairs.push({ q: messages[i].content, a: messages[i + 1].content });
+          }
+        }
+        const latest = pairs[pairs.length - 1];
+        if (!latest) return;
+
+        const W = 700,
+          H = 500;
+        const canvas = document.createElement("canvas");
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+
+        // 背景渐变
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#6a0808");
+        bg.addColorStop(1, "#3a0303");
+        ctx.fillStyle = bg;
+        ctx.roundRect(0, 0, W, H, 16);
+        ctx.fill();
+
+        // 边框
+        ctx.strokeStyle = "rgba(212,168,67,0.5)";
+        ctx.lineWidth = 1.5;
+        ctx.roundRect(4, 4, W - 8, H - 8, 14);
+        ctx.stroke();
+
+        // 大引号装饰
+        ctx.font = "bold 80px serif";
+        ctx.fillStyle = "rgba(212,168,67,0.1)";
+        ctx.fillText("❝", 20, 80);
+
+        // 标签
+        ctx.font = "12px sans-serif";
+        ctx.fillStyle = "rgba(160,120,48,0.9)";
+        ctx.fillText("仪光赤心 · AI 红色时光对话机", W / 2 - 90, 50);
+
+        // 标题
+        ctx.font = "bold 26px serif";
+        ctx.fillStyle = "#d4a843";
+        ctx.textAlign = "center";
+        ctx.fillText(`我与${currentHero.name}的时空对话`, W / 2, 100);
+
+        // 分隔线
+        ctx.strokeStyle = "rgba(212,168,67,0.3)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(60, 120);
+        ctx.lineTo(W - 60, 120);
+        ctx.stroke();
+
+        // 问题
+        ctx.textAlign = "left";
+        ctx.font = "14px sans-serif";
+        ctx.fillStyle = "rgba(196,168,130,0.9)";
+        ctx.fillText("我问：" + truncate(latest.q, 38), 60, 155);
+
+        // 左侧竖线
+        ctx.fillStyle = "rgba(160,120,48,0.8)";
+        ctx.fillRect(
+          60,
+          172,
+          3,
+          wrapText(ctx, latest.a, 70, 180, W - 130, 22).lineCount * 22 + 10,
+        );
+
+        // 回答
+        ctx.font = "15px serif";
+        ctx.fillStyle = "#f5e8d0";
+        wrapText(ctx, latest.a, 72, 180, W - 132, 22);
+
+        // 底部
+        const date = new Date().toLocaleDateString("zh-CN");
+        ctx.font = "12px sans-serif";
+        ctx.fillStyle = "rgba(196,168,130,0.7)";
+        ctx.textAlign = "left";
+        ctx.fillText(currentHero.tag + " · " + currentHero.years, 60, H - 30);
+        ctx.textAlign = "right";
+        ctx.fillText(date, W - 60, H - 30);
+
+        // 下载
+        const a = document.createElement("a");
+        a.download = `时空对话_${currentHero.name}_${date}.png`;
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+      }
+
+      function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const chars = text.split("");
+        let line = "";
+        let lineCount = 0;
+        const maxLines = 10;
+        for (let i = 0; i < chars.length; i++) {
+          const testLine = line + chars[i];
+          if (ctx.measureText(testLine).width > maxWidth && line !== "") {
+            if (lineCount < maxLines)
+              ctx.fillText(line, x, y + lineCount * lineHeight);
+            line = chars[i];
+            lineCount++;
+            if (lineCount >= maxLines) break;
+          } else {
+            line = testLine;
+          }
+        }
+        if (line && lineCount < maxLines)
+          ctx.fillText(line, x, y + lineCount * lineHeight);
+        lineCount++;
+        return { lineCount };
+      }
+
+      function truncate(str, max) {
+        return str.length > max ? str.slice(0, max) + "…" : str;
+      }
+
+      function scrollToChoose() {
+        document
+          .getElementById("choose")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>
