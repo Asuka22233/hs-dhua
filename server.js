@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(
   cors({
     origin: [
-      "https://asuka022533.github.io", // GitHub Pages 地址
+      "https://asuka22233.github.io", // GitHub Pages 地址
       "http://localhost:5500", // VS Code Live Server
       "http://127.0.0.1:5500",
       "http://localhost:3000",
