@@ -10,14 +10,12 @@ const PORT = process.env.PORT || 3000;
 // 配置 CORS，支持前后端分离部署
 app.use(
   cors({
-    origin:
-      process.env.FRONTEND_URL || process.env.NODE_ENV === "production"
-        ? [
-            "https://asuka022533.github.io", // GitHub Pages 地址
-            "http://localhost:5500", // VS Code Live Server
-            "http://127.0.0.1:5500",
-          ]
-        : "*", // 开发环境允许所有来源
+    origin: [
+      "https://asuka022533.github.io", // GitHub Pages 地址
+      "http://localhost:5500", // VS Code Live Server
+      "http://127.0.0.1:5500",
+      "http://localhost:3000",
+    ],
     credentials: true,
   }),
 );
