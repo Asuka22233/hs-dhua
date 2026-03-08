@@ -952,23 +952,169 @@
       }
 
       /* ===== 响应式 ===== */
-      @media (max-width: 600px) {
+      @media (max-width: 768px) {
+        nav {
+          padding: 10px 16px;
+        }
+        .nav-links {
+          gap: 12px;
+        }
+        .nav-links a {
+          font-size: 12px;
+        }
+        .hero {
+          padding: 40px 16px;
+          min-height: auto;
+        }
+        .hero-title {
+          letter-spacing: 4px;
+        }
+        .hero-desc {
+          margin-bottom: 32px;
+        }
         .hero-btns {
-          flex-direction: column;
-          align-items: center;
+          margin-bottom: 40px;
+        }
+        .stats {
+          gap: 12px;
         }
         .stat-card {
-          min-width: 100px;
-          padding: 20px 24px;
+          min-width: 90px;
+          padding: 18px 20px;
+        }
+        .stat-num {
+          font-size: 28px;
+        }
+        .divider span {
+          font-size: 14px;
+          letter-spacing: 2px;
+        }
+        #choose {
+          padding: 40px 16px;
+        }
+        .section-sub {
+          margin-bottom: 30px;
+        }
+        .heroes-grid {
+          gap: 12px;
         }
         .hero-card {
-          width: 150px;
+          width: calc(50% - 8px);
+          min-width: 140px;
+          padding: 20px 12px 18px;
+        }
+        .hero-avatar {
+          width: 60px;
+          height: 60px;
+          font-size: 22px;
+        }
+        .hero-name {
+          font-size: 15px;
+          letter-spacing: 2px;
+        }
+        #chat-section {
+          padding: 20px 12px 60px;
         }
         .chat-header {
-          padding: 12px 16px;
+          padding: 12px 14px;
+          gap: 10px;
+        }
+        .chat-avatar-sm {
+          width: 40px;
+          height: 40px;
+          font-size: 16px;
+        }
+        .chat-header-info h3 {
+          font-size: 15px;
+        }
+        .chat-box {
+          padding: 16px 12px;
+          min-height: 320px;
+          max-height: 420px;
         }
         .msg {
-          max-width: 90%;
+          max-width: 88%;
+        }
+        .msg-bubble {
+          font-size: 13px;
+          padding: 10px 13px;
+        }
+        .msg-avatar {
+          width: 30px;
+          height: 30px;
+          font-size: 12px;
+        }
+        .quick-questions {
+          padding: 12px 14px;
+        }
+        .quick-btn {
+          font-size: 11px;
+          padding: 4px 10px;
+        }
+        .chat-input-bar {
+          padding: 12px 14px;
+          gap: 8px;
+        }
+        .chat-input {
+          font-size: 14px;
+          padding: 8px 12px;
+        }
+        .send-btn {
+          padding: 8px 16px;
+          font-size: 13px;
+        }
+        .dialog-card {
+          padding: 24px 18px;
+        }
+        .card-title {
+          font-size: 18px;
+        }
+        .about-card {
+          min-width: 100%;
+        }
+        #about {
+          padding: 50px 16px;
+        }
+        footer {
+          padding: 30px 16px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .nav-links {
+          gap: 8px;
+        }
+        .nav-links a {
+          font-size: 11px;
+        }
+        .nav-logo {
+          font-size: 13px;
+          letter-spacing: 1px;
+        }
+        .hero-card {
+          width: calc(50% - 6px);
+          min-width: 120px;
+          padding: 16px 8px 14px;
+        }
+        .hero-avatar {
+          width: 50px;
+          height: 50px;
+        }
+        .hero-name {
+          font-size: 14px;
+        }
+        .hero-years {
+          font-size: 10px;
+        }
+        .chat-status {
+          display: none;
+        }
+        .stat-card {
+          min-width: 80px;
+          padding: 14px 16px;
+        }
+        .stat-num {
+          font-size: 24px;
         }
       }
     </style>
