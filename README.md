@@ -1,102 +1,60 @@
 # 仪光赤心 · AI 红色时光对话机
 
-跨越时空，与福建革命先烈对话的 AI 互动网页。
+> 跨越时空，与福建革命先烈对话的 AI 互动网页
+
+**在线访问：** [https://asuka22233.github.io/hs-dhua/](https://asuka22233.github.io/hs-dhua/)
 
 ## 项目简介
 
-本项目由**仪光赤心实践队**出品，结合 AI 大模型角色扮演技术，让用户以第一人称与革命先烈实时对话，探索数字红色教育新形式。
+结合 AI 大模型技术，让用户与革命先烈进行实时对话，探索数字红色教育新形式。
 
-## 功能特点
+**主要功能：**
 
-- 5 位福建革命先烈可供选择（陈祥榕、林则徐、瞿秋白、林祥谦、闽西先烈）
-- AI 大模型全程角色扮演，回答坚定质朴、富有信仰
-- 快捷提问引导，降低对话门槛
-- 支持生成并下载「时空对话卡片」图片
-- **前后端分离架构，API Key 安全保护在后端**
-
-## 部署方案
-
-**推荐：前后端分离部署**
-
-- **前端**：GitHub Pages（免费）
-- **后端**：Vercel/Railway/Render（免费）
-- **API Key**：保存在后端环境变量中，安全可靠
-
-详细部署指南：[DEPLOYMENT-SPLIT.md](DEPLOYMENT-SPLIT.md)
-
-## 快速开始
-
-### 方式一：前后端分离部署（推荐用于公开访问）
-
-1. **部署后端**到 Vercel/Railway/Render
-   - 配置环境变量 `DEEPSEEK_API_KEY`
-   - 获得后端 API 地址
-
-2. **部署前端**到 GitHub Pages
-   - 修改 `docx/index.html` 中的 `BACKEND_API` 地址
-   - 推送到 GitHub 并启用 Pages
-
-3. **配置 CORS**
-   - 在 `server.js` 中添加前端域名到 CORS 白名单
-
-👉 完整步骤请查看 [DEPLOYMENT-SPLIT.md](DEPLOYMENT-SPLIT.md)
-
-### 方式二：本地运行（开发测试）
-
-1. **安装依赖**
-
-   ```bash
-   npm install
-   ```
-
-2. **配置 API Key**
-   - 复制 `.env.example` 为 `.env`
-   - 在 `.env` 文件中填入你的 DeepSeek API Key
-
-3. **启动服务器**
-
-   ```bash
-   npm start
-   ```
-
-4. **访问**
-   打开浏览器访问 `http://localhost:3000`
-
-## 获取 API Key
-
-1. 访问 [DeepSeek 平台](https://platform.deepseek.com/)
-2. 注册并登录
-3. 在 API Keys 页面创建新的密钥
-4. 复制密钥并保存
-
-**注意：** 请妥善保管你的 API Key，不要泄露给他人。
+- 5 位福建革命先烈可供选择
+- AI 角色扮演对话
+- 快捷提问引导
+- 对话卡片生成与下载
 
 ## 技术栈
 
-- **前端：** 纯原生 HTML / CSS / JavaScript
-- **AI：** [DeepSeek API](https://platform.deepseek.com)
-- **后端（可选）：** Node.js + Express
+- **前端**：HTML / CSS / JavaScript
+- **后端**：Node.js + Express
+- **AI**：DeepSeek API
+- **部署**：GitHub Pages (前端) + Vercel (后端)
 
-## 目录结构
+## 部署架构
 
+采用前后端分离架构确保 API 密钥安全：
+
+- **前端**：托管在 GitHub Pages
+- **后端**：托管在 Vercel，通过环境变量保护 API Key
+- **CORS**：后端配置跨域访问白名单
+
+详细部署指南请查看：[DEPLOYMENT-SPLIT.md](DEPLOYMENT-SPLIT.md)
+
+## 本地开发
+
+```bash
+# 安装依赖
+npm install
+
+# 配置环境变量（复制 .env.example 为 .env，填入 API Key）
+cp .env.example .env
+
+# 启动服务
+npm start
 ```
-├── docx/
-│   └── index.html      # 主页面（支持纯前端运行）
-├── server.js           # Node.js 后端（可选）
-├── package.json        # npm 依赖
-├── .env.example        # 环境变量示例
-├── .gitignore          # Git 忽略配置
-├── DEPLOYMENT.md       # 部署指南
-└── README.md           # 本文件
-```
 
-## 安全说明
+访问 `http://localhost:3000` 即可使用。
 
-✅ **已实施的安全措施：**
+## 获取 API Key
 
-- API Key 可保存在浏览器本地（localStorage），不会上传到服务器
-- `.env` 文件已在 `.gitignore` 中配置，不会提交到 Git
-- 提供了 `.env.example` 作为配置模板，不包含真实密钥
+访问 [DeepSeek 平台](https://platform.deepseek.com/) 注册并创建 API 密钥。
+
+---
+
+**项目作者**：仪光赤心实践队  
+**许可证**：MIT
 
 ⚠️ **重要提示：**
 
