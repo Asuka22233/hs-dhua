@@ -1773,19 +1773,14 @@
         ctx.fillStyle = "rgba(196,168,130,0.9)";
         ctx.fillText("我问：" + truncate(latest.q, 38), 60, 155);
 
-        // 左侧竖线
-        ctx.fillStyle = "rgba(160,120,48,0.8)";
-        ctx.fillRect(
-          60,
-          172,
-          3,
-          wrapText(ctx, latest.a, 70, 180, W - 130, 22).lineCount * 22 + 10,
-        );
-
-        // 回答
+        // 回答文本
         ctx.font = "15px serif";
         ctx.fillStyle = "#f5e8d0";
-        wrapText(ctx, latest.a, 72, 180, W - 132, 22);
+        const answerMetrics = wrapText(ctx, latest.a, 72, 180, W - 132, 22);
+
+        // 左侧竖线 (根据回答文本的实际行数来绘制高度)
+        ctx.fillStyle = "rgba(160,120,48,0.8)";
+        ctx.fillRect(60, 172, 3, answerMetrics.lineCount * 22 + 10);
 
         // 底部
         const date = new Date().toLocaleDateString("zh-CN");
